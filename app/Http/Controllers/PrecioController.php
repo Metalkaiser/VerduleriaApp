@@ -22,9 +22,13 @@ class PrecioController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        precio::create([
+            'product' => $request['product'],
+            'price' => $request['price']
+        ]);
+        return response()->json("Creado");
     }
 
     /**
@@ -44,9 +48,12 @@ class PrecioController extends Controller
      * @param  \App\precio  $precio
      * @return \Illuminate\Http\Response
      */
-    public function show(precio $precio)
+    public function show($precio)
     {
-        //
+        $edit = precio::find($precio);
+        return response()->json(
+            $edit->toArray()
+        );
     }
 
     /**
@@ -55,7 +62,7 @@ class PrecioController extends Controller
      * @param  \App\precio  $precio
      * @return \Illuminate\Http\Response
      */
-    public function edit(precio $precio)
+    public function edit($id)
     {
         //
     }
@@ -69,7 +76,14 @@ class PrecioController extends Controller
      */
     public function update(Request $request, precio $precio)
     {
-        //
+        if ($request->ajax()) {
+            $id = $request["id"];
+            $price = $request["price"];
+            $producto = precio::find($id);
+            $producto->price = $price;
+            $producto->save();
+            return response()->json($producto);
+        }
     }
 
     /**
@@ -78,8 +92,21 @@ class PrecioController extends Controller
      * @param  \App\precio  $precio
      * @return \Illuminate\Http\Response
      */
-    public function destroy(precio $precio)
+    public function destroy($id)
     {
-        //
+        //$id = $request["id"];
+        $producto = precio::find($id);
+        $producto->delete();
+        return response()->json('Borrado');
+    }
+
+    public function administrador(Request $request){
+        if ($request->ajax()) {
+            $pr = precio::all();
+            return response()->json(
+                $pr->toArray()
+            );
+        }
+        return view('rutas.admin');
     }
 }

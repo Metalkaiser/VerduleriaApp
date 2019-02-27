@@ -15,4 +15,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('verduleria/admin', 'PrecioController@administrador');
+Route::get('verduleria/cajero', function () {
+	return view('rutas.cajero');
+});
 Route::resource('verduleria', 'PrecioController');
