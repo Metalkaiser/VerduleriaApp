@@ -68,10 +68,12 @@ function editar(btn){
 			res.product.charAt(0).toUpperCase() + res.product.slice(1));
 		prec.val(res.price);
 		$("#actualizar").click(function(){
-			var dato = prec.val();
+			var valor = prec.val();
+			var id = $("#id");
+			var ruta = "http://localhost:8000/verduleria/" + id + "";
 			$.ajax({
 				url: ruta,
-				data: {price:dato, id:id},
+				data: {price:valor, id:id},
 				dataType: "json",
 				type: "PUT",
 				success: function(){
