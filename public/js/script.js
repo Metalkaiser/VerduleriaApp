@@ -48,7 +48,7 @@
     				this.product.slice(1) + "</td><td>" + 
     				this.price + "</td><td><button value=" + this.id + 
     				" class='btn btn-primary' onclick='editar(" + this.id + 
-    				")' data-toggle='modal' data-target='#editPrice'>Editar</button>" +
+    				")' data-toggle='modal' data-target='#editform'>Editar</button>" +
     				"<button value=" + this.id + 
     				" class='btn btn-danger' onclick='borrar(" + this.id + 
     				")' data-toggle='modal' data-target='#editPrice'>Eliminar</button></tr>");
@@ -61,12 +61,24 @@ function editar(btn){
 	var titulo = $("#modaltituloedit");
 	var ruta = "http://localhost:8000/verduleria/" + btn + "";
 	var id = $("#id");
-	var prec = $("#precio");
+	var prec = $("#precioedita");
 	id.val(btn);
 	$.get(ruta, function(res){
-
+		titulo.text("Editar el precio de " + 
+			res.product.charAt(0).toUpperCase() + res.product.slice(1));
 		prec.val(res.price);
-		console.log(prec.val());
+		$("#actualizar").click(function(){
+			var dato = prec.val();
+			$.ajax({
+				url: ruta,
+				data: {price:dato, id:id},
+				dataType: "json",
+				type: "PUT",
+				success: function(){
+					console.log("Logrado");
+				}
+			});
+		})
 	});
 }
 function borrar(btn){
