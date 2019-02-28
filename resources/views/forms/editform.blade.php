@@ -3,7 +3,7 @@
 	{!!Form::label('Precio: ')!!}
 	{{ Form::number('price', null, array_merge(['class' => 'form-control', 'id' => 'precioedita'])) }}
     <div class="modal-footer">
-        {{ Form::button('Actualizar', ['type' => 'submit', 'class' => 'btn btn-primary', 'id' => 'actualizar'] )  }}
+        {{ Form::button('Actualizar', ['type' => 'submit', 'class' => 'btn btn-primary', 'id' => 'actualizar', 'data-dismiss' => 'modal'] )  }}
         <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
     </div>
 </div>

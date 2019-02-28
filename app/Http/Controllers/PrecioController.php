@@ -94,7 +94,6 @@ class PrecioController extends Controller
      */
     public function destroy($id)
     {
-        //$id = $request["id"];
         $producto = precio::find($id);
         $producto->delete();
         return response()->json('Borrado');

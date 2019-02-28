@@ -13,7 +13,7 @@
 @include('layouts.modal.deleteModal')
 	<div>
 		<h3>Opciones de usuario</h3>
-		<button id="ver" onclick="mos()" class="btn btn-primary">Ver cuenta</button>
+		<button id="ver" class="btn btn-primary">Ver cuenta</button>
 		<button id="editar" class="btn btn-primary">Editar perfil</button>
 	</div>
 	<div>
