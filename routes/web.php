@@ -20,3 +20,6 @@ Route::get('verduleria/cajero', function () {
 	return view('rutas.cajero');
 });
 Route::resource('verduleria', 'PrecioController');
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

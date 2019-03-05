@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\precio;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PrecioController extends Controller
 {
@@ -106,6 +107,11 @@ class PrecioController extends Controller
                 $pr->toArray()
             );
         }
-        return view('rutas.admin');
+        if (Auth::check()){
+            return view('rutas.admin');
+        }
+        else{
+            return view('auth.login');
+        }
     }
 }
