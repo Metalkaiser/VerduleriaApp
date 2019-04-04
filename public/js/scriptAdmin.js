@@ -1,5 +1,5 @@
 ﻿$(document).ready(function(){
-	//Token CSRF
+////////////Token CSRF////////////
 	$.ajaxSetup({
  	 headers: {
  	   'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -9,7 +9,7 @@
 	$('#precios').click(function(){
 		var tabla = $("#tabla");
 		var tablaDatos = $("#datos");
-		var ruta = "http://localhost:8000/verduleria/admin";
+		var ruta = "/verduleria/admin";
 		$.get(ruta, function(data){
 			data.sort(function(a, b){
   				var aName = a.product;
@@ -38,7 +38,7 @@
 ////////////Declaración de funciones////////////
 function editar(btn){
 	var titulo = $("#modaltituloedit");
-	var ruta = "http://localhost:8000/verduleria/" + btn + "";
+	var ruta = "/administrador/" + btn + "";
 	var id = $("#id");
 	var prec = $("#precioedita");
 	id.val(btn);
@@ -51,7 +51,7 @@ function editar(btn){
 		    e.stopImmediatePropagation();
 			var valor = $("#precioedita").val();
 			var id = $("#id").val();
-			var ruta = "http://localhost:8000/verduleria/" + id + "";
+			var ruta = "/administrador/" + id + "";
 			$.ajax({
 				url: ruta,
 				type: 'PUT',
@@ -60,6 +60,16 @@ function editar(btn){
 				success: function(){
 					$("#editform").modal('toggle');
 					carga();
+				},
+				error: function(xhr){
+					var errorData = xhr.responseJSON;
+					const keys = Object.values(errorData);
+					var mensaje = "";
+					keys.forEach(elemento);
+					function elemento(value){
+						mensaje = mensaje + value[0] + "\n";
+					}
+					alert(mensaje);
 				}
 			});
 		})
@@ -67,7 +77,7 @@ function editar(btn){
 }
 function borrar(btn){
 	var titulo = $("#modaltitulodel");
-	var ruta = "http://localhost:8000/verduleria/" + btn + "";
+	var ruta = "/administrador/" + btn + "";
 	var id = $("#id");
 	id.val(btn);
 	$.get(ruta,function(res){
@@ -90,7 +100,7 @@ function borrar(btn){
 	});
 }
 function agregar(){
-	var ruta = "http://localhost:8000/verduleria/create";
+	var ruta = "/administrador/create";
 	$("#producto").val(null);				//Vacio el campo Producto
 	$("#preciocrea").val(null);				//Vacio el campo Precio
 	$("#crear").click(function(e){
@@ -106,6 +116,16 @@ function agregar(){
 			success: function(){
 				$("#creaform").modal('toggle');
 				carga();
+			},
+			error: function(xhr){
+				var errorData = xhr.responseJSON;
+				const keys = Object.values(errorData);
+				var mensaje = "";
+				keys.forEach(elemento);
+				function elemento(value){
+					mensaje = mensaje + value[0] + "\n";
+				}
+				alert(mensaje);
 			}
 		});
 	});
@@ -113,7 +133,7 @@ function agregar(){
 function carga(){
 	var tabla = $("#tabla");
 	var tablaDatos = $("#datos");
-	var ruta = "http://localhost:8000/verduleria/admin";
+	var ruta = "/verduleria/admin";
 	$.get(ruta, function(data){
 		data.sort(function(a, b){
 			var aName = a.product;

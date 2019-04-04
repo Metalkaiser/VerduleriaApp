@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use App\precio;
 use Illuminate\Http\Request;
+use App\Http\Requests\NewProductRequest;
+use App\Http\Requests\UpdateProductRequest;
 use Illuminate\Support\Facades\Auth;
+
 
 class PrecioController extends Controller
 {
@@ -23,7 +26,7 @@ class PrecioController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Request $request)
+    public function create(NewProductRequest $request)
     {
         precio::create([
             'product' => $request['product'],
@@ -75,7 +78,7 @@ class PrecioController extends Controller
      * @param  \App\precio  $precio
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, precio $precio)
+    public function update(UpdateProductRequest $request, precio $precio)
     {
         if ($request->ajax()) {
             $id = $request["id"];
@@ -107,6 +110,7 @@ class PrecioController extends Controller
                 $pr->toArray()
             );
         }
+        //Verifico si el usuario está logeado
         if (Auth::check()){
             return view('rutas.admin');
         }

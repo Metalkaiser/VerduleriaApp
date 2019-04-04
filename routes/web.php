@@ -16,10 +16,10 @@ Route::get('/', function () {
 });
 
 Route::get('verduleria/admin', 'PrecioController@administrador');
-Route::get('verduleria/cajero', function () {
-	return view('rutas.cajero');
-});
-Route::resource('verduleria', 'PrecioController');
+Route::get('verduleria/cajero', 'CajeroController@cajero');
+Route::get('/verduleria', 'PrecioController@index');
+Route::resource('administrador', 'PrecioController');
+Route::resource('cajero', 'CajeroController');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
