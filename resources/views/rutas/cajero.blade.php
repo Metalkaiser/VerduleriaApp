@@ -7,11 +7,13 @@
 @section('content')
 	<div>
 		<h3>Consulta de precios</h3>
-
-		<input type="text" class="productoc" name="productoc">
+		<select class="productoc">
+			@foreach ($lista as $value)
+				<option value="{{$value['product']}}">{{$value['product']}}</option>
+			@endforeach
+		</select>
 		<button class="btn btn-primary" id="botonconsulta">Consultar</button>
-		<h4 id="consultaprecio">Consulte el precio de cualquier producto</h4>
-		
+		<h4 id="consultaprecio">Consulte el precio de cualquier producto</h4>		
 	</div>
 	<br>
 	<div class="controlcliente">
@@ -21,7 +23,11 @@
 				<label>Cantidad (gramos): </label>
 				<input type="text" id="cant">
 				<label> X Producto: </label>
-				<input type="text" class="productoc">
+				<select class="productoc">
+					@foreach ($lista as $value)
+						<option value="{{$value['product']}}">{{$value['product']}}</option>
+					@endforeach
+				</select>
 				<button id="addprod" class="btn btn-primary">Agregar</button>
 			</div>
 			<div>
@@ -37,6 +43,7 @@
 		</div>
 		<div>
 			<strong>Total: <span id="total">0</span></strong>
+			<button class="btn btn-primary" id="limpiar" disabled="disabled">Limpiar pantalla</button>
 		</div>
 	</div>
 @endsection

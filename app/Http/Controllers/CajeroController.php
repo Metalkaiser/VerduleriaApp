@@ -25,9 +25,15 @@ class CajeroController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        $q = $request['product'];
+        if ($q !== "") {
+            $a = precio::all();
+            return response()->json(
+                $a->toArray()
+            );
+        }
     }
 
     /**
@@ -38,7 +44,7 @@ class CajeroController extends Controller
      */
     public function store(Request $request)
     {
-       //        
+       //
     }
 
     /**
@@ -87,6 +93,7 @@ class CajeroController extends Controller
     }
 
     public function cajero(Request $request){
+        $lista = precio::all();
         if($request->ajax()){
             $consulta = $request['product'];
             $respuesta = precio::where('product', '=', $consulta)->get();
@@ -94,6 +101,6 @@ class CajeroController extends Controller
                 $respuesta->toArray()
             );
         }
-        return view('rutas.cajero');
+        return view('rutas.cajero',compact('lista'));
     }
 }

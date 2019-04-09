@@ -107,6 +107,7 @@ function agregar(){
 		e.preventDefault();
 		e.stopImmediatePropagation();
 		var producto = $("#producto").val();
+		producto = producto.toLowerCase();
 		var valor = $("#preciocrea").val();
 		$.ajax({
 			url:ruta,
