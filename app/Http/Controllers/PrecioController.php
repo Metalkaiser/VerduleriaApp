@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use App\precio;
 use Illuminate\Http\Request;
+use App\Http\Requests\NewProductRequest;
+use App\Http\Requests\UpdateProductRequest;
+use Illuminate\Support\Facades\Auth;
+
 
 class PrecioController extends Controller
 {
@@ -22,9 +26,13 @@ class PrecioController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(NewProductRequest $request)
     {
-        //
+        precio::create([
+            'product' => $request['product'],
+            'price' => $request['price']
+        ]);
+        return response()->json("Creado");
     }
 
     /**
@@ -44,9 +52,12 @@ class PrecioController extends Controller
      * @param  \App\precio  $precio
      * @return \Illuminate\Http\Response
      */
-    public function show(precio $precio)
+    public function show($precio)
     {
-        //
+        $edit = precio::find($precio);
+        return response()->json(
+            $edit->toArray()
+        );
     }
 
     /**
@@ -55,7 +66,7 @@ class PrecioController extends Controller
      * @param  \App\precio  $precio
      * @return \Illuminate\Http\Response
      */
-    public function edit(precio $precio)
+    public function edit($id)
     {
         //
     }
@@ -67,9 +78,16 @@ class PrecioController extends Controller
      * @param  \App\precio  $precio
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, precio $precio)
+    public function update(UpdateProductRequest $request, precio $precio)
     {
-        //
+        if ($request->ajax()) {
+            $id = $request["id"];
+            $price = $request["price"];
+            $producto = precio::find($id);
+            $producto->price = $price;
+            $producto->save();
+            return response()->json($producto);
+        }
     }
 
     /**
@@ -78,8 +96,26 @@ class PrecioController extends Controller
      * @param  \App\precio  $precio
      * @return \Illuminate\Http\Response
      */
-    public function destroy(precio $precio)
+    public function destroy($id)
     {
-        //
+        $producto = precio::find($id);
+        $producto->delete();
+        return response()->json('Borrado');
+    }
+
+    public function administrador(Request $request){
+        if ($request->ajax()) {
+            $pr = precio::all();
+            return response()->json(
+                $pr->toArray()
+            );
+        }
+        //Verifico si el usuario está logeado
+        if (Auth::check()){
+            return view('rutas.admin');
+        }
+        else{
+            return view('auth.login');
+        }
     }
 }

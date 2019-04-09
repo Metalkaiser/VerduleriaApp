@@ -15,4 +15,11 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::resource('verduleria', 'PrecioController');
+Route::get('verduleria/admin', 'PrecioController@administrador');
+Route::get('verduleria/cajero', 'CajeroController@cajero');
+Route::get('/verduleria', 'PrecioController@index');
+Route::resource('administrador', 'PrecioController');
+Route::resource('cajero', 'CajeroController');
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
